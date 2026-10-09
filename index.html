@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Generator · Regedit Shopee</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ============ FUNDO COM PARTÍCULAS ============ */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+        }
+
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            from { transform: translateY(0) translateX(0); }
+            to { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        .glow-orb {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-orb.one { top: -200px; left: -200px; }
+        .glow-orb.two { bottom: -200px; right: -200px; }
+
+        /* ============ CONTAINER 3D ============ */
+        .scene {
+            perspective: 2000px;
+            z-index: 1;
+        }
+
+        .card {
+            width: 480px;
+            background: #0a0a0a;
+            border: 1px solid #1f1f1f;
+            border-radius: 24px;
+            padding: 40px 38px 34px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(6deg) rotateY(-3deg);
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow:
+                0 40px 80px rgba(0,0,0,0.9),
+                0 0 0 1px rgba(255,255,255,0.03),
+                inset 0 1px 0 rgba(255,255,255,0.08),
+                inset 0 -1px 0 rgba(0,0,0,0.5);
+            animation: cardEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+        }
+
+        @keyframes cardEntry {
+            from {
+                opacity: 0;
+                transform: rotateX(20deg) rotateY(-8deg) translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: rotateX(6deg) rotateY(-3deg) translateY(0);
+            }
+        }
+
+        .card:hover {
+            transform: rotateX(0deg) rotateY(0deg) translateZ(20px);
+        }
+
+        /* Borda superior brilhante */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+        }
+
+        /* ============ HEADER ============ */
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            border: 1px solid #262626;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.6),
+                inset 0 1px 0 rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .brand-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: #fff;
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.5));
+        }
+
+        .brand-icon::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15), transparent 60%);
+            pointer-events: none;
+        }
+
+        .brand-text {
+            text-align: left;
+        }
+
+        .brand-title {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .brand-sub {
+            color: #555;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* Linha decorativa */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #262626, transparent);
+            margin: 22px 0;
+            position: relative;
+        }
+
+        .divider::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+
+        /* ============ PROGRESSO ============ */
+        .progress-section {
+            margin-bottom: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #888;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .progress-label svg {
+            width: 14px;
+            height: 14px;
+            fill: #666;
+        }
+
+        .progress-percent {
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+
+        .progress-track {
+            height: 6px;
+            background: #141414;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.8);
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #666, #fff);
+            border-radius: 20px;
+            transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 0 15px rgba(255,255,255,0.5);
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* ============ TAREFAS 3D ============ */
+        .task {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 18px;
+            background: linear-gradient(145deg, #131313, #0d0d0d);
+            border: 1px solid #1f1f1f;
+            border-radius: 14px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            box-shadow:
+                0 4px 12px rgba(0,0,0,0.5),
+                inset 0 1px 0 rgba(255,255,255,0.04);
+        }
+
+        .task::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .task:hover::before {
+            left: 100%;
+        }
+
+        .task:hover {
+            border-color: #333;
+            transform: translateY(-4px) rotateX(2deg);
+            box-shadow:
+                0 20px 40px rgba(0,0,0,0.8),
+                0 0 0 1px rgba(255,255,255,0.06),
+                inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+
+        .task.completed {
+            border-color: #fff;
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+        }
+
+        .task.completed::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+        }
+
+        .task-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #1c1c1c, #0d0d0d);
+            border: 1px solid #262626;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+            position: relative;
+        }
+
+        .task:hover .task-icon {
+            border-color: #444;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 0 20px rgba(255,255,255,0.1);
+        }
+
+        .task.completed .task-icon {
+            background: #fff;
+            border-color: #fff;
+        }
+
+        .task-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .task.completed .task-icon svg {
+            fill: #000;
+        }
+
+        .task-content {
+            flex: 1;
+            text-align: left;
+        }
+
+        .task-title {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+
+        .task.completed .task-title {
+            text-decoration: line-through;
+            text-decoration-color: #555;
+            color: #888;
+        }
+
+        .task-desc {
+            color: #555;
+            font-size: 10.5px;
+            letter-spacing: 0.3px;
+        }
+
+        .task-status {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            border: 2px solid #262626;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .task-status svg {
+            width: 12px;
+            height: 12px;
+            fill: #555;
+            transition: 0.3s;
+        }
+
+        .task.completed .task-status {
+            background: #fff;
+            border-color: #fff;
+            box-shadow: 0 0 20px rgba(255,255,255,0.4);
+        }
+
+        .task.completed .task-status svg {
+            fill: #000;
+        }
+
+        /* ============ ÁREA DA KEY ============ */
+        .key-area {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed #1f1f1f;
+        }
+
+        .key-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            justify-content: center;
+        }
+
+        .key-label svg {
+            width: 12px;
+            height: 12px;
+            fill: #555;
+        }
+
+        .key-box {
+            background: #060606;
+            border: 1px solid #1f1f1f;
+            border-radius: 12px;
+            padding: 22px 20px;
+            margin-bottom: 16px;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 3px 12px rgba(0,0,0,0.9);
+            transition: all 0.4s ease;
+        }
+
+        .key-box::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(145deg, rgba(255,255,255,0.03), transparent);
+            pointer-events: none;
+        }
+
+        .key-box.active {
+            border-color: #fff;
+            box-shadow: inset 0 3px 12px rgba(0,0,0,0.9), 0 0 30px rgba(255,255,255,0.15);
+        }
+
+        .key-text {
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255,255,255,0.4);
+            transition: all 0.4s ease;
+            user-select: all;
+        }
+
+        .key-placeholder {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #333;
+            font-size: 12px;
+            letter-spacing: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .key-placeholder svg {
+            width: 18px;
+            height: 18px;
+            fill: #333;
+        }
+
+        /* ============ BOTÃO PRINCIPAL ============ */
+        .btn {
+            width: 100%;
+            padding: 17px;
+            border: none;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .btn-primary {
+            background: linear-gradient(145deg, #fff, #d9d9d9);
+            color: #000;
+            box-shadow:
+                0 10px 30px rgba(255,255,255,0.15),
+                inset 0 1px 0 rgba(255,255,255,0.9),
+                inset 0 -2px 0 rgba(0,0,0,0.15);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow:
+                0 20px 40px rgba(255,255,255,0.25),
+                inset 0 1px 0 rgba(255,255,255,0.9),
+                inset 0 -2px 0 rgba(0,0,0,0.15);
+        }
+
+        .btn-primary:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.15), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:disabled {
+            background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+            color: #444;
+            cursor: not-allowed;
+            box-shadow:
+                0 4px 12px rgba(0,0,0,0.5),
+                inset 0 1px 0 rgba(255,255,255,0.03);
+        }
+
+        .btn-primary:disabled svg {
+            fill: #444;
+        }
+
+        /* ============ RODAPÉ ============ */
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #333;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .footer svg {
+            width: 11px;
+            height: 11px;
+            fill: #333;
+        }
+
+        /* ============ MODAL ============ */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: #0d0d0d;
+            border: 1px solid #262626;
+            border-radius: 20px;
+            padding: 40px 32px 32px;
+            text-align: center;
+            max-width: 360px;
+            width: 100%;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+            animation: modalIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            border: 1px solid #262626;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+
+        .modal-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: #fff;
+        }
+
+        .modal-title {
+            color: #fff;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .modal-text {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 14px;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn:hover {
+            background: #d9d9d9;
+            transform: translateY(-2px);
+        }
+
+        /* ============ RESPONSIVO ============ */
+        @media (max-width: 520px) {
+            .card {
+                width: 92vw;
+                padding: 30px 24px 26px;
+                transform: none;
+            }
+            .card:hover {
+                transform: none;
+            }
+            .key-text {
+                font-size: 16px;
+                letter-spacing: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fundo decorativo -->
+    <div class="bg-grid"></div>
+    <div class="glow-orb one"></div>
+    <div class="glow-orb two"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Card Principal -->
+    <div class="scene">
+        <div class="card">
+
+            <!-- Brand Header -->
+            <div class="brand">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <div class="brand-title">Key Generator</div>
+                    <div class="brand-sub">Regedit Shopee v1.0.0</div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Barra de Progresso -->
+            <div class="progress-section">
+                <div class="progress-header">
+                    <div class="progress-label">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        Progresso
+                    </div>
+                    <div class="progress-percent" id="progressPercent">0%</div>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- Tarefa 1: Encurtador -->
+            <div class="task" id="taskShortener" onclick="openShortener()">
+                <div class="task-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+                    </svg>
+                </div>
+                <div class="task-content">
+                    <div class="task-title">Verificação Alpha Rede</div>
+                    <div class="task-desc">Clique para abrir o encurtador</div>
+                </div>
+                <div class="task-status">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 10l6 6 6-6z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Tarefa 2: YouTube -->
+            <div class="task" id="taskYoutube" onclick="openYoutube()">
+                <div class="task-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M23.5 6.2c-.3-1.1-1.1-1.9-2.2-2.2C19.4 3.5 12 3.5 12 3.5s-7.4 0-9.3.5C1.6 4.3.8 5.1.5 6.2 0 8.1 0 12 0 12s0 3.9.5 5.8c.3 1.1 1.1 1.9 2.2 2.2 1.9.5 9.3.5 9.3.5s7.4 0 9.3-.5c1.1-.3 1.9-1.1 2.2-2.2.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.5 15.5V8.5l6.5 3.5-6.5 3.5z"/>
+                    </svg>
+                </div>
+                <div class="task-content">
+                    <div class="task-title">Canal Alone Sensi</div>
+                    <div class="task-desc">Inscreva-se no canal do YouTube</div>
+                </div>
+                <div class="task-status">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 10l6 6 6-6z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Área da Key -->
+            <div class="key-area">
+                <div class="key-label">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+                    </svg>
+                    Sua Key de Acesso
+                </div>
+
+                <div class="key-box" id="keyBox">
+                    <div class="key-placeholder" id="keyPlaceholder">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10z"/>
+                        </svg>
+                        XXXX-XXXX-XXXX-XXXX
+                    </div>
+                    <div class="key-text" id="keyText" style="display:none;"></div>
+                </div>
+
+                <button class="btn btn-primary" id="btnGenerate" disabled onclick="generateKey()">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                    </svg>
+                    <span id="btnLabel">Aguardando Tarefas</span>
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+                </svg>
+                Conexão Segura · Verificada
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-icon" id="modalIcon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+            </div>
+            <div class="modal-title" id="modalTitle">Sucesso</div>
+            <div class="modal-text" id="modalText">Operação concluída com sucesso.</div>
+            <button class="modal-btn" onclick="closeModal()">Continuar</button>
+        </div>
+    </div>
+
+    <script>
+        // ==================== CONFIGURAÇÕES ====================
+        // Substitua pelo seu link real do encurtador
+        const SHORTENER_URL = 'https://alpharede.com/SEU_LINK_AQUI';
+        const YOUTUBE_URL = 'https://m.youtube.com/@alone_sensi';
+
+        // ==================== ESTADO ====================
+        let task1Done = false;
+        let task2Done = false;
+
+        // ==================== PARTÍCULAS ====================
+        (function createParticles() {
+            const container = document.getElementById('particles');
+            const count = 40;
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = (100 + Math.random() * 100) + '%';
+                p.style.animationDuration = (8 + Math.random() * 12) + 's';
+                p.style.animationDelay = (Math.random() * 10) + 's';
+                p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+                p.style.opacity = 0.1 + Math.random() * 0.5;
+                container.appendChild(p);
+            }
+        })();
+
+        // ==================== INICIALIZAÇÃO ====================
+        window.addEventListener('DOMContentLoaded', function() {
+            // Recupera estado salvo
+            task1Done = localStorage.getItem('kg_task1') === 'true';
+            task2Done = localStorage.getItem('kg_task2') === 'true';
+
+            // Aplica estado visual
+            updateTaskUI();
+            updateProgress();
+
+            // Verifica se veio do redirecionamento
+            detectReturn();
+        });
+
+        // ==================== DETECÇÃO DE REFERRER ====================
+        function detectReturn() {
+            const referrer = document.referrer.toLowerCase();
+            const currentUrl = window.location.href.toLowerCase();
+
+            let detected = false;
+
+            if (referrer.includes('alpharede') || currentUrl.includes('ref=alpharede') || currentUrl.includes('alpharede')) {
+                if (!task1Done) {
+                    task1Done = true;
+                    localStorage.setItem('kg_task1', 'true');
+                    detected = true;
+                }
+            }
+
+            if (referrer.includes('youtube') || referrer.includes('youtu.be') || currentUrl.includes('alone_sensi')) {
+                if (!task2Done) {
+                    task2Done = true;
+                    localStorage.setItem('kg_task2', 'true');
+                    detected = true;
+                }
+            }
+
+            if (detected) {
+                updateTaskUI();
+                updateProgress();
+                showModal(
+                    'Tarefa Concluída',
+                    'Redirecionamento detectado com sucesso. Verificando progresso...'
+                );
+            }
+        }
+
+        // ==================== AÇÕES DAS TAREFAS ====================
+        function openShortener() {
+            if (task1Done) {
+                showModal('Já Concluído', 'Você já passou pelo encurtador Alpha Rede.');
+                return;
+            }
+            window.open(SHORTENER_URL, '_blank');
+            showModal(
+                'Aguardando Retorno',
+                'Complete o encurtador Alpha Rede. Ao voltar para esta página, a tarefa será concluída automaticamente.'
+            );
+        }
+
+        function openYoutube() {
+            if (task2Done) {
+                showModal('Já Concluído', 'Você já se inscreveu no canal Alone Sensi.');
+                return;
+            }
+            window.open(YOUTUBE_URL, '_blank');
+            showModal(
+                'Aguardando Retorno',
+                'Inscreva-se no canal Alone Sensi e volte para esta página. A tarefa será concluída automaticamente.'
+            );
+        }
+
+        // ==================== ATUALIZAÇÃO DE UI ====================
+        function updateTaskUI() {
+            const task1 = document.getElementById('taskShortener');
+            const task2 = document.getElementById('taskYoutube');
+
+            if (task1Done) task1.classList.add('completed');
+            if (task2Done) task2.classList.add('completed');
+        }
+
+        function updateProgress() {
+            let progress = 0;
+            if (task1Done) progress += 50;
+            if (task2Done) progress += 50;
+
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressPercent').textContent = progress + '%';
+
+            const btn = document.getElementById('btnGenerate');
+            const label = document.getElementById('btnLabel');
+
+            if (task1Done && task2Done) {
+                btn.disabled = false;
+                label.textContent = 'Gerar Key';
+            } else {
+                btn.disabled = true;
+                label.textContent = 'Aguardando Tarefas';
+            }
+        }
+
+        // ==================== GERAR KEY ====================
+        function generateKey() {
+            if (!task1Done || !task2Done) return;
+
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let key = '';
+            for (let i = 0; i < 16; i++) {
+                if (i > 0 && i % 4 === 0) key += '-';
+                key += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+
+            // Atualiza UI
+            const placeholder = document.getElementById('keyPlaceholder');
+            const keyText = document.getElementById('keyText');
+            const keyBox = document.getElementById('keyBox');
+            const btn = document.getElementById('btnGenerate');
+            const label = document.getElementById('btnLabel');
+
+            placeholder.style.display = 'none';
+            keyText.style.display = 'block';
+            keyText.textContent = key;
+            keyBox.classList.add('active');
+
+            btn.disabled = true;
+            label.textContent = 'Key Gerada';
+
+            // Animação de digitação
+            let i = 0;
+            const finalKey = key;
+            keyText.textContent = '';
+            const typeInterval = setInterval(() => {
+                if (i < finalKey.length) {
+                    keyText.textContent += finalKey[i];
+                    i++;
+                } else {
+                    clearInterval(typeInterval);
+                    // Copia automaticamente
+                    navigator.clipboard.writeText(finalKey).then(() => {
+                        showModal(
+                            'Key Gerada',
+                            'Sua key foi gerada e copiada automaticamente. Cole no painel para ativar.'
+                        );
+                    }).catch(() => {
+                        showModal(
+                            'Key Gerada',
+                            'Sua key foi gerada com sucesso. Copie e cole no painel.'
+                        );
+                    });
+                }
+            }, 60);
+        }
+
+        // ==================== MODAL ====================
+        function showModal(title, text) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalText').textContent = text;
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+    </script>
+
+</body>
+</html>
